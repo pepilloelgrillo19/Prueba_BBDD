@@ -4,16 +4,24 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.UserHandle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
+    //Declaración de las variables que se inicializarán más tarde (lateinit)
     private lateinit var namUser: EditText
     private lateinit var emUser: EditText
     private lateinit var saveBut: Button
     private lateinit var db: DatabaseHandler
+    private lateinit var querBut: Button
+    private lateinit var querFull: TextView
+    private lateinit var queName: TextView
+    private lateinit var querEmail: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         namUser = findViewById(R.id.nombreUser)
         emUser = findViewById(R.id.emailUser)
         saveBut = findViewById(R.id.saveButton)
+        querBut = findViewById(R.id.queryButton)
+        querFull = findViewById(R.id.querCompleta)
+        queName = findViewById(R.id.recupName)
 
         db = DatabaseHandler(this)
 
@@ -33,12 +44,11 @@ class MainActivity : AppCompatActivity() {
                 val id = db.addContact(name,email)
                 if (id == -1L){
                     //Error al guardar en la base de datos
-                    //TODO Toast
                     Toast.makeText(applicationContext, "Ha ocurrido un error", Toast.LENGTH_LONG).show()
 
 
                 }else{
-                    //TODO Toast para avisar de que se ha guardado el registro
+                    //Se ha guardado el registro
                     namUser.text.clear()
                     emUser.text.clear()
                     Toast.makeText(applicationContext, "Se ha guardado el contacto", Toast.LENGTH_LONG).show()
@@ -46,10 +56,24 @@ class MainActivity : AppCompatActivity() {
                 }
 
             } else { //cuando el usuario no ha metido un campo
-                //TODO Toast
+                //No se ha rellenado correctamente
                 Toast.makeText(applicationContext, "Te falta algún campo por rellenar", Toast.LENGTH_LONG).show()
 
             }
+
+
+        }
+        querBut.setOnClickListener {
+            val contactList = db.recorrerBBDD()
+
+            //Manda la consulta al LogCat
+            for (contact in contactList){
+                Log.d("Contacto ", "ID: ${contact.id}, Nombre: ${contact.name}, Email: ${contact.email}")
+
+            }
+
+            querFull.text = ""
+            querFull.text = contactList.joinToString()
 
 
         }

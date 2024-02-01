@@ -49,5 +49,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GUARDAR" />
+
+        <Button
+            android:id="@+id/queryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consulta" />
+
+        <TextView
+            android:id="@+id/recupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/recupEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/querCompleta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
