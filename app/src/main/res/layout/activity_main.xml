@@ -44,6 +44,21 @@
             android:inputType="textEmailAddress"
             android:textSize="22dp" />
 
+        <TextView
+            android:id="@+id/miTextoFijo4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Introduce tu provincia"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/miProvincia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="22dp" />
+
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
@@ -78,6 +93,12 @@
 
         <TextView
             android:id="@+id/recupEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22dp" />
+
+        <TextView
+            android:id="@+id/querProv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="22dp" />

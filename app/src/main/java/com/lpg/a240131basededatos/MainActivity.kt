@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var partQuerBut : Button
     private lateinit var querID : EditText
     private lateinit var sortQuer : Button
+    private lateinit var miprov: EditText
+    private lateinit var querProvi: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,14 +40,17 @@ class MainActivity : AppCompatActivity() {
         partQuerBut = findViewById(R.id.recupButton)
         querID = findViewById(R.id.pedirId)
         sortQuer = findViewById(R.id.sortQuerButt)
+        miprov = findViewById(R.id.miProvincia)
+        querProvi = findViewById(R.id.querProv)
 
         db = DatabaseHandler(this)
 
         saveBut.setOnClickListener {
             val name = namUser.text.toString().trim()
             val email = emUser.text.toString().trim()
-            if (name.isNotEmpty() && email.isNotEmpty()){
-                val id = db.addContact(name,email)
+            val provincia = miprov.text.toString().trim()
+            if (name.isNotEmpty() && email.isNotEmpty() && provincia.isNotEmpty()){
+                val id = db.addContact(name,email,provincia)
                 if (id == -1L){
                     //Error al guardar en la base de datos
                     Toast.makeText(applicationContext, "Ha ocurrido un error", Toast.LENGTH_LONG).show()
@@ -53,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     //Se ha guardado el registro
                     namUser.text.clear()
                     emUser.text.clear()
+                    miprov.text.clear()
                     Toast.makeText(applicationContext, "Se ha guardado el contacto", Toast.LENGTH_LONG).show()
                 }
             } else { //cuando el usuario no ha metido un campo
@@ -78,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                     if(contact.id == querId2){
                         queName.text= contact.name
                         querEmail.text = contact.email
+                        querProvi.text = contact.provincia
                     }
             }
         }
@@ -88,7 +95,8 @@ class MainActivity : AppCompatActivity() {
                 val id = contact.id
                 val name = contact.name
                 val email = contact.email
-                querFull.append("$id $name $email \n")
+                val provincia = contact.provincia
+                querFull.append("$id $name $email $provincia \n")
                 }
             }
 
