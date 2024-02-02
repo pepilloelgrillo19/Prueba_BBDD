@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var querEmail: TextView
     private lateinit var partQuerBut : Button
     private lateinit var querID : EditText
+    private lateinit var sortQuer : Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,41 +37,34 @@ class MainActivity : AppCompatActivity() {
         querEmail = findViewById(R.id.recupEmail)
         partQuerBut = findViewById(R.id.recupButton)
         querID = findViewById(R.id.pedirId)
+        sortQuer = findViewById(R.id.sortQuerButt)
 
         db = DatabaseHandler(this)
 
         saveBut.setOnClickListener {
             val name = namUser.text.toString().trim()
             val email = emUser.text.toString().trim()
-
             if (name.isNotEmpty() && email.isNotEmpty()){
                 val id = db.addContact(name,email)
                 if (id == -1L){
                     //Error al guardar en la base de datos
                     Toast.makeText(applicationContext, "Ha ocurrido un error", Toast.LENGTH_LONG).show()
-
-
                 }else{
                     //Se ha guardado el registro
                     namUser.text.clear()
                     emUser.text.clear()
                     Toast.makeText(applicationContext, "Se ha guardado el contacto", Toast.LENGTH_LONG).show()
-
                 }
-
             } else { //cuando el usuario no ha metido un campo
                 //No se ha rellenado correctamente
                 Toast.makeText(applicationContext, "Te falta algún campo por rellenar", Toast.LENGTH_LONG).show()
-
             }
         }
         querBut.setOnClickListener {
             val contactList = db.recorrerBBDD()
-
             //Manda la consulta al LogCat
             for (contact in contactList){
                 Log.d("Contacto ", "ID: ${contact.id}, Nombre: ${contact.name}, Email: ${contact.email}")
-
             }
             querFull.text = ""
             querFull.text = contactList.joinToString()
@@ -79,41 +73,27 @@ class MainActivity : AppCompatActivity() {
             queName.text = ""
             querEmail.text = ""
             val querId2 = querID.text.toString().toIntOrNull()
-
             val contactList = db.recorrerBBDD()
             for (contact in contactList){
-
                     if(contact.id == querId2){
                         queName.text= contact.name
                         querEmail.text = contact.email
                     }
-
+            }
+        }
+        sortQuer.setOnClickListener {
+            querFull.text = ""
+            val contactList = db.recorrerBBDD()
+            for (contact in contactList){
+                val id = contact.id
+                val name = contact.name
+                val email = contact.email
+                querFull.append("$id $name $email \n")
+                }
             }
 
 
-
-
-
-            /* if (querId == null){
-                Toast.makeText(applicationContext, "Introduce una ID válida", Toast.LENGTH_LONG).show()
-            }else{
-                val contactList = db.recorrerBBDD()
-                for (contact in contactList){
-
-                    if(contact.id == querId){
-                        queName.text= contact.name
-                        querEmail.text = contact.email
-                    }
-
-                }
-
-
-            }*/
-
-
-
         }
-
     }
 
-}
+

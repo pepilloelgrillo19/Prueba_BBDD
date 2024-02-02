@@ -62,4 +62,5 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         }
         return contactList
     }
+
 }
