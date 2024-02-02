@@ -50,23 +50,43 @@
             android:layout_height="wrap_content"
             android:text="GUARDAR" />
 
-        <Button
-            android:id="@+id/queryButton"
+        <TextView
+            android:id="@+id/miTextoFijo3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Consulta" />
+            android:text="Introduce el ID del resgistro a buscar"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/pedirId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/recupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recuperar registro" />
 
         <TextView
             android:id="@+id/recupName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:textSize="22dp" />
 
         <TextView
             android:id="@+id/recupEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:textSize="22dp" />
+
+        <Button
+            android:id="@+id/fullQueryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consulta completa" />
 
         <TextView
             android:id="@+id/querCompleta"
