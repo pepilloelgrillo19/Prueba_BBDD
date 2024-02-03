@@ -104,13 +104,17 @@
             android:text="Introduce la provincia de los contactos a buscar"
             android:textSize="16sp" />
 
-        <EditText
+        <!-- <EditText
             android:id="@+id/querryProv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:textSize="22dp" />
+            android:textSize="22dp" /> -->
+        <Spinner
+        android:id="@+id/spinnerProv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/querryProvButton"

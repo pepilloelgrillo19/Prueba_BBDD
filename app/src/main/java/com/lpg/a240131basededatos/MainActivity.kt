@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         querID = findViewById(R.id.pedirId)
         sortQuer = findViewById(R.id.sortQuerButt)
         miprov = findViewById(R.id.miProvincia)
-        querProv = findViewById(R.id.querryProv)
+        querProv = findViewById(R.id.spinnerProv)
         querProvBut = findViewById(R.id.querryProvButton)
 
         db = DatabaseHandler(this)
