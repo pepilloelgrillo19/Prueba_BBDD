@@ -48,8 +48,9 @@ class MainActivity : AppCompatActivity() {
 
         //Con esta función, solo recoge las provincias presentes en la BBDD, de forma única
         //La declaro aquí arriba, para que, en caso de que se le sume un contacto, poder meterla en la activación
-        //Y que se actualice
-        var provArray = db.selecProvUnica()
+        //del botón, y que se actualice
+        //Se añade .sorted() para que saque la lista ordenada
+        var provArray = db.selecProvUnica().sorted()
         var querProv2:String = ""
         //El adapter es necesario para poder llenar y darle funcionabilidad al menú desplegable
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provArray)
@@ -101,8 +102,10 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+
             //Necesito meterlo para que se actualice al introducir un nuevo contacto
-            var provArray = db.selecProvUnica()
+            //.sorted permite que la salida sea ordenada alfabéticamente
+            var provArray = db.selecProvUnica().sorted()
             var querProv2:String = ""
             //El adapter es necesario para poder llenar y darle funcionabilidad al menú desplegable
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provArray)
@@ -125,8 +128,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
 
         querBut.setOnClickListener {
             val contactList = db.recorrerBBDD()

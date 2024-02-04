@@ -48,20 +48,20 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         //Para empezar a usar el cursor
         cursor.use{
 
-             if (it.moveToFirst()){
-                 do{
-                     //Primero sacamos el valor de id del primer registro
-                     val id = it.getInt(it.getColumnIndex(KEY_ID))
-                     val name = it.getString(it.getColumnIndex(KEY_NAME))
-                     val email = it.getString(it.getColumnIndex(KEY_EMAIL))
-                     val provincia = it.getString(it.getColumnIndex(KEY_PROV))
-                     //Ahora hay que guardar los valores que hemos recuperado
-                     val contact = Contact(id,name,email,provincia)
-                     //Y los añadimos en la variable del tipo lista que recogerá todos los valores
-                     contactList.add(contact)
+            if (it.moveToFirst()){
+                do{
+                    //Primero sacamos el valor de id del primer registro
+                    val id = it.getInt(it.getColumnIndex(KEY_ID))
+                    val name = it.getString(it.getColumnIndex(KEY_NAME))
+                    val email = it.getString(it.getColumnIndex(KEY_EMAIL))
+                    val provincia = it.getString(it.getColumnIndex(KEY_PROV))
+                    //Ahora hay que guardar los valores que hemos recuperado
+                    val contact = Contact(id,name,email,provincia)
+                    //Y los añadimos en la variable del tipo lista que recogerá todos los valores
+                    contactList.add(contact)
 
-                 }while (it.moveToNext())
-             }
+                }while (it.moveToNext())
+            }
         }
         return contactList
     }
@@ -102,11 +102,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
             if (it.moveToFirst()){
                 do{
-                    //val id = it.getInt(it.getColumnIndex(KEY_ID))
-                    //val name = it.getString(it.getColumnIndex(KEY_NAME))
-                    //val email = it.getString(it.getColumnIndex(KEY_EMAIL))
                     val provincia = it.getString(it.getColumnIndex(KEY_PROV))
-                    //val contact = Contact(id,name,email,provincia)
                     contactList.add(provincia)
 
                 }while (it.moveToNext())
