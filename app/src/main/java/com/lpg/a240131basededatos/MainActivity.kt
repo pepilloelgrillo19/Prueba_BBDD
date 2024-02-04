@@ -3,8 +3,12 @@ package com.lpg.a240131basededatos
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 
@@ -21,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var querID: EditText
     private lateinit var sortQuer: Button
     private lateinit var miprov: EditText
-    private lateinit var querProv: EditText
+    private lateinit var querProv: Spinner
     private lateinit var querProvBut: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,9 +117,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //Variable con las provincias que meteremos en el menú desplegable
+        val provArray = arrayOf("","A Coruña", "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz", "Baleares", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Girona", "Granada", "Guadalajara", "Gipuzkoa", "Huelva", "Huesca", "Jaén", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra", "Salamanca", "Segovia", "Sevilla", "Soria", "Tarragona", "Santa Cruz de Tenerife", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza")
+        //Variable donde meteremos la selección del menú desplegable. Es necesario declararla fuera de los eventos para que todos los elementos la puedan ver
+        var querProv2:String = ""
+        //El adapter es necesario para poder llenar y  darle funcionabilidad al menú desplegable
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provArray)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        querProv.adapter = adapter
+        //Activa el evento de selección en el menú desplegable
+        querProv.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            //Le da los argumentos para poder seleccionar la provincia desde el array
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                querProv2 = provArray[position].toString()
+                if (querProv2 != ""){
+                    Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+            }
+        }
+
         querProvBut.setOnClickListener {
             querFull.text = ""
-            val querProv2 = querProv.text.toString()
             val contactList = db.queryProvinciaContacts(querProv2)
             for (contact in contactList) {
                 val id = contact.id
