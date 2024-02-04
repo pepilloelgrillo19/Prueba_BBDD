@@ -46,6 +46,32 @@ class MainActivity : AppCompatActivity() {
 
         db = DatabaseHandler(this)
 
+        //Con esta función, solo recoge las provincias presentes en la BBDD, de forma única
+        //La declaro aquí arriba, para que, en caso de que se le sume un contacto, poder meterla en la activación
+        //Y que se actualice
+        var provArray = db.selecProvUnica()
+        var querProv2:String = ""
+        //El adapter es necesario para poder llenar y darle funcionabilidad al menú desplegable
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provArray)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        querProv.adapter = adapter
+        //Activa el evento de selección en el menú desplegable
+        querProv.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            //Le da los argumentos para poder seleccionar la provincia desde el array
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                querProv2 = provArray[position].toString()
+                if (querProv2 != ""){
+                    Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Según la documentación consultada, es necesario esta función para definir el spinner
+
+            }
+        }
+
         saveBut.setOnClickListener {
             val name = namUser.text.toString().trim()
             val email = emUser.text.toString().trim()
@@ -75,7 +101,32 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+            //Necesito meterlo para que se actualice al introducir un nuevo contacto
+            var provArray = db.selecProvUnica()
+            var querProv2:String = ""
+            //El adapter es necesario para poder llenar y darle funcionabilidad al menú desplegable
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provArray)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            querProv.adapter = adapter
+            //Activa el evento de selección en el menú desplegable
+            querProv.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+                //Le da los argumentos para poder seleccionar la provincia desde el array
+                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                    querProv2 = provArray[position].toString()
+                    if (querProv2 != ""){
+                        Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // Según la documentación consultada, es necesario esta función para definir el spinner
+
+                }
+            }
         }
+
+
 
         querBut.setOnClickListener {
             val contactList = db.recorrerBBDD()
@@ -114,30 +165,6 @@ class MainActivity : AppCompatActivity() {
                 val email = contact.email
                 val provincia = contact.provincia
                 querFull.append("$id $name $email $provincia \n")
-            }
-        }
-
-        //Variable con las provincias que meteremos en el menú desplegable
-        val provArray = arrayOf("","A Coruña", "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz", "Baleares", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Girona", "Granada", "Guadalajara", "Gipuzkoa", "Huelva", "Huesca", "Jaén", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra", "Salamanca", "Segovia", "Sevilla", "Soria", "Tarragona", "Santa Cruz de Tenerife", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza")
-        //Variable donde meteremos la selección del menú desplegable. Es necesario declararla fuera de los eventos para que todos los elementos la puedan ver
-        var querProv2:String = ""
-        //El adapter es necesario para poder llenar y  darle funcionabilidad al menú desplegable
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provArray)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        querProv.adapter = adapter
-        //Activa el evento de selección en el menú desplegable
-        querProv.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            //Le da los argumentos para poder seleccionar la provincia desde el array
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                querProv2 = provArray[position].toString()
-                if (querProv2 != ""){
-                    Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
             }
         }
 

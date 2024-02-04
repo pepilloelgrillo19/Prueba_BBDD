@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "MyDatabase"
         private const val TABLE_NAME = "Contacts"
         private const val KEY_ID = "id"
@@ -71,7 +71,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val db = this.readableDatabase
 
         val selectQuery = ("SELECT * FROM $TABLE_NAME WHERE $KEY_PROV='$provincia'")
-         val cursor = db.rawQuery(selectQuery,null)
+        val cursor = db.rawQuery(selectQuery,null)
 
         cursor.use{
 
@@ -83,6 +83,31 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     val provincia = it.getString(it.getColumnIndex(KEY_PROV))
                     val contact = Contact(id,name,email,provincia)
                     contactList.add(contact)
+
+                }while (it.moveToNext())
+            }
+        }
+        return contactList
+
+    }
+
+    fun selecProvUnica():List<String>{
+        val contactList = mutableListOf<String>()
+        val db = this.readableDatabase
+
+        val selectQuery = ("SELECT DISTINCT $KEY_PROV FROM $TABLE_NAME")
+        val cursor = db.rawQuery(selectQuery,null)
+
+        cursor.use{
+
+            if (it.moveToFirst()){
+                do{
+                    //val id = it.getInt(it.getColumnIndex(KEY_ID))
+                    //val name = it.getString(it.getColumnIndex(KEY_NAME))
+                    //val email = it.getString(it.getColumnIndex(KEY_EMAIL))
+                    val provincia = it.getString(it.getColumnIndex(KEY_PROV))
+                    //val contact = Contact(id,name,email,provincia)
+                    contactList.add(provincia)
 
                 }while (it.moveToNext())
             }
