@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/miTextoFijo6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Introduce el usuario (eMail)"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/userLogEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:textSize="22dp" />
+
+        <TextView
+            android:id="@+id/miTextoFijo7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Introduce la contraseña"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/userLogPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="22dp" />
+
+        <Button
+            android:id="@+id/userLogLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log in" />
+
+        <Button
+            android:id="@+id/userRecupLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recordar contraseña" />
+
+        <Button
+            android:id="@+id/userRegLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

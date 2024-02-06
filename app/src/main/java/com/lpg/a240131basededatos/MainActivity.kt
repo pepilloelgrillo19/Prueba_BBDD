@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sortQuer: Button
     private lateinit var miprov: EditText
     private lateinit var querProv: Spinner
-    private lateinit var querProvBut: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         sortQuer = findViewById(R.id.sortQuerButt)
         miprov = findViewById(R.id.miProvincia)
         querProv = findViewById(R.id.spinnerProv)
-        querProvBut = findViewById(R.id.querryProvButton)
 
         db = DatabaseHandler(this)
 
@@ -64,6 +62,15 @@ class MainActivity : AppCompatActivity() {
                 querProv2 = provArray[position].toString()
                 if (querProv2 != ""){
                     Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
+                }
+                querFull.text = ""
+                val contactList = db.queryProvinciaContacts(querProv2)
+                for (contact in contactList) {
+                    val id = contact.id
+                    val name = contact.name
+                    val email = contact.email
+                    val provincia = contact.provincia
+                    querFull.append("$id $name $email $provincia \n")
                 }
             }
 
@@ -117,6 +124,7 @@ class MainActivity : AppCompatActivity() {
                 //Le da los argumentos para poder seleccionar la provincia desde el array
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     querProv2 = provArray[position].toString()
+
                     if (querProv2 != ""){
                         Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
                     }
@@ -166,23 +174,6 @@ class MainActivity : AppCompatActivity() {
                 val email = contact.email
                 val provincia = contact.provincia
                 querFull.append("$id $name $email $provincia \n")
-            }
-        }
-
-        querProvBut.setOnClickListener {
-            querFull.text = ""
-            val contactList = db.queryProvinciaContacts(querProv2)
-            for (contact in contactList) {
-                val id = contact.id
-                val name = contact.name
-                val email = contact.email
-                val provincia = contact.provincia
-                querFull.append("$id $name $email $provincia \n")
-            }
-            //para que muestre un mensaje si se deja el campo en blanco
-            if (querProv2 == ""){
-                Toast.makeText(applicationContext, "Campo de provincia vacio.", Toast.LENGTH_LONG)
-                    .show()
             }
         }
     }
