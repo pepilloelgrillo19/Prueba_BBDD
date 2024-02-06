@@ -100,6 +100,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
         cursor.use{
 
+            //contactList.add(0,"")
             if (it.moveToFirst()){
                 do{
                     val provincia = it.getString(it.getColumnIndex(KEY_PROV))
@@ -108,6 +109,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 }while (it.moveToNext())
             }
         }
+        contactList.add("")
         return contactList
 
     }
