@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "987923025649",
+    "project_id": "entregable-bbdd",
+    "storage_bucket": "entregable-bbdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987923025649:android:b82dc99afac31b101f2350",
+        "android_client_info": {
+          "package_name": "com.lpg.a240131basededatos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8skrWJw3PXDKZuU9inLJakl4UdRpeFmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
