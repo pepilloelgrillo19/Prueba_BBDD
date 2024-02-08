@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">240131 Base de datos</string>
+    <!-- Esta cadena es la identificación de la app en Firebase -->
+    <string name="default_web_AppID">987923025649-g3073egeafhi60he0e44ocl6b8apckg2.apps.googleusercontent.com</string>
 </resources>

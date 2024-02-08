@@ -12,7 +12,12 @@
           "package_name": "com.lpg.a240131basededatos"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "987923025649-g3073egeafhi60he0e44ocl6b8apckg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA8skrWJw3PXDKZuU9inLJakl4UdRpeFmQ"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987923025649-g3073egeafhi60he0e44ocl6b8apckg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
