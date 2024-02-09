@@ -75,8 +75,8 @@ class Login : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//intentamos logearnos con Google, pero no manejamos la tarea, sino que capturamos
-//la excepción. Luego vemos lo que hacemos en la siguiente funcion
+        //intentamos logearnos con Google, pero no manejamos la tarea, sino que capturamos
+        //la excepción. Luego vemos lo que hacemos en la siguiente funcion
             try {
                 // Autenticar con Firebase con la cuenta de Google obtenida
                 val account = task.getResult(ApiException::class.java)!!

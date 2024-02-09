@@ -52,5 +52,7 @@ dependencies {
     //Importar APIS de inicio de sesión (no está en las instrucciones del
     // tutorial de Firebase
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    //Dependencias para los anuncios
+    implementation ("com.google.android.gms:play-services-ads:22.6.0")
 
 }

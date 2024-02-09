@@ -11,6 +11,14 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+//Imports para anuncios
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,10 +34,62 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sortQuer: Button
     private lateinit var miprov: EditText
     private lateinit var querProv: Spinner
+    //Variables privadas para anuncios
+    private var mInterstitialAd: InterstitialAd? = null
+    private final var TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Inicialización para anuncios
+        MobileAds.initialize(this)
+
+        //Opciones de anuncios
+
+        var adRequest = AdRequest.Builder().build()
+
+      InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+        override fun onAdFailedToLoad(adError: LoadAdError) {
+          Log.d(TAG, adError.toString())
+          mInterstitialAd = null
+        }
+
+        override fun onAdLoaded(interstitialAd: InterstitialAd) {
+          Log.d(TAG, "Ad was loaded.")
+          mInterstitialAd = interstitialAd
+        }
+      })
+        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d(TAG, "Ad was clicked.")
+            }
+
+            override fun onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                Log.d(TAG, "Ad dismissed fullscreen content.")
+                mInterstitialAd = null
+            }
+
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                // Called when ad fails to show.
+                Log.e(TAG, "Ad failed to show fullscreen content.")
+                mInterstitialAd = null
+            }
+
+            override fun onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d(TAG, "Ad recorded an impression.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d(TAG, "Ad showed fullscreen content.")
+            }
+        }
+
+
 
         namUser = findViewById(R.id.nombreUser)
         emUser = findViewById(R.id.emailUser)
@@ -44,6 +104,10 @@ class MainActivity : AppCompatActivity() {
 
         db = DatabaseHandler(this)
 
+
+
+
+
         //Con esta función, solo recoge las provincias presentes en la BBDD, de forma única
         //La declaro aquí arriba, para que, en caso de que se le sume un contacto, poder meterla en la activación
         //del botón, y que se actualice
@@ -54,6 +118,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         querProv.adapter = adapter
+
         //Activa el evento de selección en el menú desplegable
         querProv.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -62,6 +127,11 @@ class MainActivity : AppCompatActivity() {
                 querProv2 = provArray[position].toString()
                 if (querProv2 != ""){
                     Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
+                }
+                if (mInterstitialAd != null) {
+                    mInterstitialAd?.show(this@MainActivity)
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
                 }
                 querFull.text = ""
                 val contactList = db.queryProvinciaContacts(querProv2)
