@@ -34,14 +34,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sortQuer: Button
     private lateinit var miprov: EditText
     private lateinit var querProv: Spinner
+    private lateinit var publiHand: PublicidadHandler
+    /*
     //Variables privadas para anuncios
     private var mInterstitialAd: InterstitialAd? = null
-    private final var TAG = "MainActivity"
+    private final var TAG = "MainActivity"*/
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+      /*
         // Inicialización para anuncios
         MobileAds.initialize(this)
 
@@ -87,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 // Called when ad is shown.
                 Log.d(TAG, "Ad showed fullscreen content.")
             }
-        }
+        }*/
 
 
 
@@ -104,9 +107,10 @@ class MainActivity : AppCompatActivity() {
 
         db = DatabaseHandler(this)
 
-
-
-
+        publiHand = PublicidadHandler(this)
+        publiHand.getAd()
+        publiHand.loadContAd()
+        publiHand.loadAd()
 
         //Con esta función, solo recoge las provincias presentes en la BBDD, de forma única
         //La declaro aquí arriba, para que, en caso de que se le sume un contacto, poder meterla en la activación
@@ -128,11 +132,12 @@ class MainActivity : AppCompatActivity() {
                 if (querProv2 != ""){
                     Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
                 }
-                if (mInterstitialAd != null) {
+                publiHand.loadAd()
+                /* if (mInterstitialAd != null) {
                     mInterstitialAd?.show(this@MainActivity)
                 } else {
                     Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
+                }*/
                 querFull.text = ""
                 val contactList = db.queryProvinciaContacts(querProv2)
                 for (contact in contactList) {

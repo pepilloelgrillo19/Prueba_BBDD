@@ -30,6 +30,7 @@ class Login : AppCompatActivity() {
     private lateinit var usLogPass : EditText
     private lateinit var progBar : ProgressBar
     private lateinit var gooBut: Button
+    private lateinit var publiHand: PublicidadHandler
 
     private lateinit var auth: FirebaseAuth
 
@@ -48,6 +49,13 @@ class Login : AppCompatActivity() {
 
         auth= FirebaseAuth.getInstance()
 
+        publiHand = PublicidadHandler(this)
+        publiHand.getAd()
+        publiHand.loadContAd()
+
+        publiHand.getAd()
+        publiHand.loadContAd()
+
         // Configuramos opciones de inicio de sesión de Google
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_AppID))
@@ -59,6 +67,7 @@ class Login : AppCompatActivity() {
         gooBut.setOnClickListener {
             signInWithGoogle()
         }
+
 
     }
 

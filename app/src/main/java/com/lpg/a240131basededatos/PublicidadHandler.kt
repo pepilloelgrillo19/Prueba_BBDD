@@ -1,5 +1,6 @@
 package com.lpg.a240131basededatos
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import com.google.android.gms.ads.AdError
@@ -10,25 +11,25 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
-class PublicidadHandler (context: Context) {
+class PublicidadHandler (var context: Context) {
 
     private var mInterstitialAd: InterstitialAd? = null
     private final var TAG = "MainActivity"
-    private lateinit var selectActiv
-    // Inicialización para anuncios
-    MobileAds.initialize(this)
-
-    //Opciones de anuncios
-
-    var adRequest = AdRequest.Builder().build()
+    private var selectActiv = context as Activity
+    private var blockOfAd = "ca-app-pub-3940256099942544/1033173712"
 
     fun getAd(){
-        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+        // Inicialización para anuncios
+        MobileAds.initialize(context)
+
+        //Opciones de anuncios
+        var adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(context,blockOfAd, adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 Log.d(TAG, adError.toString())
                 mInterstitialAd = null
             }
-
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 Log.d(TAG, "Ad was loaded.")
                 mInterstitialAd = interstitialAd
