@@ -44,56 +44,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-      /*
-        // Inicialización para anuncios
-        MobileAds.initialize(this)
-
-        //Opciones de anuncios
-
-        var adRequest = AdRequest.Builder().build()
-
-      InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-        override fun onAdFailedToLoad(adError: LoadAdError) {
-          Log.d(TAG, adError.toString())
-          mInterstitialAd = null
-        }
-
-        override fun onAdLoaded(interstitialAd: InterstitialAd) {
-          Log.d(TAG, "Ad was loaded.")
-          mInterstitialAd = interstitialAd
-        }
-      })
-        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-            override fun onAdClicked() {
-                // Called when a click is recorded for an ad.
-                Log.d(TAG, "Ad was clicked.")
-            }
-
-            override fun onAdDismissedFullScreenContent() {
-                // Called when ad is dismissed.
-                Log.d(TAG, "Ad dismissed fullscreen content.")
-                mInterstitialAd = null
-            }
-
-            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                // Called when ad fails to show.
-                Log.e(TAG, "Ad failed to show fullscreen content.")
-                mInterstitialAd = null
-            }
-
-            override fun onAdImpression() {
-                // Called when an impression is recorded for an ad.
-                Log.d(TAG, "Ad recorded an impression.")
-            }
-
-            override fun onAdShowedFullScreenContent() {
-                // Called when ad is shown.
-                Log.d(TAG, "Ad showed fullscreen content.")
-            }
-        }*/
-
-
-
         namUser = findViewById(R.id.nombreUser)
         emUser = findViewById(R.id.emailUser)
         saveBut = findViewById(R.id.saveButton)
@@ -110,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         publiHand = PublicidadHandler(this)
         publiHand.getAd()
         publiHand.loadContAd()
-        publiHand.loadAd()
+
 
         //Con esta función, solo recoge las provincias presentes en la BBDD, de forma única
         //La declaro aquí arriba, para que, en caso de que se le sume un contacto, poder meterla en la activación
@@ -133,11 +83,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "La provincia seleccionada es:" + provArray[position], Toast.LENGTH_SHORT).show()
                 }
                 publiHand.loadAd()
-                /* if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this@MainActivity)
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }*/
+
                 querFull.text = ""
                 val contactList = db.queryProvinciaContacts(querProv2)
                 for (contact in contactList) {
@@ -151,7 +97,6 @@ class MainActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // Según la documentación consultada, es necesario esta función para definir el spinner
-
             }
         }
 

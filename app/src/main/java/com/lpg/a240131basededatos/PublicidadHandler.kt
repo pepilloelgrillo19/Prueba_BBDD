@@ -11,12 +11,18 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
+//Se incluye el constructor context:Context para que pueda cargarse
+//la actividad desde las diferentes actividades
 class PublicidadHandler (var context: Context) {
 
     private var mInterstitialAd: InterstitialAd? = null
     private final var TAG = "MainActivity"
-    private var selectActiv = context as Activity
+    //Este es el identificador para las cadenas de anuncio, que es proporcionado
+    // y requerido por Admob
     private var blockOfAd = "ca-app-pub-3940256099942544/1033173712"
+    //Esta variable es necesaria para que pueda funcionar la carga del anuncio
+    //desde cualquier actividad (sustituye el this@MainActivity)
+    private var selectActiv = context as Activity
 
     fun getAd(){
         // Inicialización para anuncios
@@ -66,17 +72,13 @@ class PublicidadHandler (var context: Context) {
                 Log.d(TAG, "Ad showed fullscreen content.")
             }
         }
-
     }
+
     fun loadAd(){
         if (mInterstitialAd != null) {
             mInterstitialAd?.show(selectActiv)
         } else {
             Log.d("TAG", "The interstitial ad wasn't ready yet.")
         }
-
     }
-
-
-
 }

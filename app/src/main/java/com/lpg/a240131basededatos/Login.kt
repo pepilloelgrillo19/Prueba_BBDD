@@ -53,8 +53,6 @@ class Login : AppCompatActivity() {
         publiHand.getAd()
         publiHand.loadContAd()
 
-        publiHand.getAd()
-        publiHand.loadContAd()
 
         // Configuramos opciones de inicio de sesión de Google
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -106,12 +104,14 @@ class Login : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Autenticación con Google exitosa, el usuario está conectado
                     Toast.makeText(this, "Inicio de sesión con Google exitoso", Toast.LENGTH_SHORT).show()
+
                     startActivity(Intent(this,MainActivity::class.java))
                 } else {
                     // Fallo en la autenticación con Google
                     Toast.makeText(this, "Error en la autenticación con Google", Toast.LENGTH_SHORT).show()
                 }
             }
+        publiHand.loadAd()
     }
 
 
