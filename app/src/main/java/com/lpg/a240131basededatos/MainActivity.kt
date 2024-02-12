@@ -19,6 +19,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,12 +36,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var miprov: EditText
     private lateinit var querProv: Spinner
     private lateinit var publiHand: PublicidadHandler
-    /*
-    //Variables privadas para anuncios
-    private var mInterstitialAd: InterstitialAd? = null
-    private final var TAG = "MainActivity"*/
+    private final var TAG2 = "MainActivity"
 
-     override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -56,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         querProv = findViewById(R.id.spinnerProv)
 
         db = DatabaseHandler(this)
+        val dbFirestore = FirebaseFirestore.getInstance()
+
 
         publiHand = PublicidadHandler(this)
         publiHand.getAd()
@@ -106,6 +107,17 @@ class MainActivity : AppCompatActivity() {
             val provincia = miprov.text.toString().trim()
             if (name.isNotEmpty() && email.isNotEmpty() && provincia.isNotEmpty()) {
                 val id = db.addContact(name, email, provincia)
+                //inyecto aquí el código de Firestore, para que funcione con el botón de guardar
+                dbFirestore.collection("usuarios").document(email).set(
+                    hashMapOf("nombre" to name,
+                        "provincia" to provincia
+                    )
+                ).addOnSuccessListener {
+                    Log.d(TAG2, "Documento creado exitosamente")
+                }.addOnFailureListener { e ->
+                    Log.w(TAG2, "Error al crear el documento", e)
+                }
+                // aqui termina el código de Firestore, y sigue el de SQLite
                 if (id == -1L) {
                     //Error al guardar en la base de datos
                     Toast.makeText(applicationContext, "Ha ocurrido un error", Toast.LENGTH_LONG)
@@ -158,6 +170,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         querBut.setOnClickListener {
+
             val contactList = db.recorrerBBDD()
             //Manda la consulta al LogCat
             for (contact in contactList) {
@@ -187,14 +200,25 @@ class MainActivity : AppCompatActivity() {
 
         sortQuer.setOnClickListener {
             querFull.text = ""
-            val contactList = db.recorrerBBDD()
-            for (contact in contactList) {
+            //val contactList = db.recorrerBBDD()
+            val contactList = dbFirestore.collection("usuarios")
+            contactList.get().addOnSuccessListener {documents ->
+                for (document in documents) {
+                    val email = document.id
+                    val name = document.getString("nombre")
+                    val provincia = document.getString("provincia")
+                    querFull.append("$name $email $provincia \n")
+
+                }
+
+            }
+            /* for (contact in contactList) {
                 val id = contact.id
                 val name = contact.name
                 val email = contact.email
                 val provincia = contact.provincia
                 querFull.append("$id $name $email $provincia \n")
-            }
+            }*/
         }
     }
 }
